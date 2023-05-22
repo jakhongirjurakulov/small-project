@@ -1,6 +1,6 @@
 package com.smallproject.SmallProject.service;
 
-import com.smallproject.SmallProject.entity.CompanyEntity;
+import com.smallproject.SmallProject.entity.Company;
 import com.smallproject.SmallProject.repository.CompanyRepository;
 
 public class CompanyService {
@@ -10,7 +10,7 @@ public class CompanyService {
         this.companyRepository = companyRepository;
     }
 
-    public CompanyEntity save(CompanyEntity company) {
+    public Company save(Company company) {
         return companyRepository.save(company);
     }
 }

@@ -1,26 +1,30 @@
 package com.smallproject.SmallProject.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import java.util.List;
 
-@Data
-@Builder
+@Setter
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name="small_project")
-public class CompanyEntity {
+@Table(name="company")
+public class Company {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
-    private String userName;
-    private String userPassword;
+    @Column(nullable=false, unique=true)
     private String companyName;
+
+    @Column(nullable=false)
     private String companyAddress;
+
+    @Column(nullable=false)
     private String companyZipCode;
+
+    @OneToMany(mappedBy = "")
+    private List<Employee> employees;
 }
 

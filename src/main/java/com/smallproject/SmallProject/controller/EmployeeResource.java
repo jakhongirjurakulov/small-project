@@ -1,7 +1,7 @@
 package com.smallproject.SmallProject.controller;
 
-import com.smallproject.SmallProject.dto.Employee;
-import com.smallproject.SmallProject.entity.EmployeeEntity;
+import com.smallproject.SmallProject.dto.EmployeeDto;
+import com.smallproject.SmallProject.entity.Employee;
 import com.smallproject.SmallProject.service.EmployeeService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,7 +12,7 @@ import java.util.Collections;
 import java.util.List;
 
 @RestController
-@RequestMapping("v1/employee")
+@RequestMapping("/api")
 public class EmployeeResource {
 
     private final EmployeeService employeeService;
@@ -21,35 +21,30 @@ public class EmployeeResource {
         this.employeeService = employeeService;
     }
 
-    @GetMapping("/employees")
-    public ResponseEntity getAll() {
-        Employee employee1 = new Employee(1L, "Jakhongir1", "Content-Manager1");
-        Employee employee2 = new Employee(2L, "Jakhongir2", "Content-Manager2");
-        Employee employee3 = new Employee(3L, "Jakhongir3", "Content-Manager3");
-
-        List<Employee> employees = new ArrayList<>();
-        Collections.addAll(employees, employee1, employee2, employee3);
-        return ResponseEntity.ok(employees);
-    }
-
-    @GetMapping("/employees/{id}")
-    public ResponseEntity get(@PathVariable Long id, String name, String position) {
-        Employee employee = new Employee(id, name, position);
+    @PostMapping("{companyId}/employee/create/registration")
+    public ResponseEntity create(@PathVariable Long id, @RequestBody EmployeeDto employeeDto) {
+        var employee = employeeService.save(employeeDto);
         return ResponseEntity.ok(employee);
     }
 
-    @PostMapping("/employee/create")
-    public ResponseEntity create(@RequestBody EmployeeEntity employee) {
-        EmployeeEntity createEmployee = employeeService.save(employee);
-        return ResponseEntity.ok(createEmployee);
+    @GetMapping("/employees")
+    public ResponseEntity getAll() {
+        var employees = employeeService.getAll();
+        return ResponseEntity.ok(employees);
+    }
+
+    @GetMapping("/employees/{companyId}")
+    public ResponseEntity get(@PathVariable Long id, String name, String position) {
+        EmployeeDto employee = new EmployeeDto(id, name, position);
+        return ResponseEntity.ok(employee);
     }
 
     @PutMapping("/employee/edit/{id}")
-    public ResponseEntity edit(@PathVariable Long id, @RequestBody EmployeeEntity newEmployee) {
-        Employee employee1 = new Employee(1L, "Javoxir", "Java Dev");
-        employee1.setName(newEmployee.getEmployeeName());
-        employee1.setName(newEmployee.getEmployeePosition());
-        return ResponseEntity.ok(employee1);
+    public ResponseEntity edit(@PathVariable Long id, @RequestBody Employee newEmployee) {
+        EmployeeDto employee1 = new EmployeeDto(1L, "Javoxir", "Java Dev");
+//        employee1.setName(newEmployee.getEmployeeName());
+//        return ResponseEntity.ok(employee1);
+        return null;
     }
 
     @DeleteMapping("/employee/delete/{id}")
@@ -63,5 +58,10 @@ public class EmployeeResource {
         RestTemplate restTemplate = new RestTemplate();
         String result = restTemplate.getForObject(uri, String.class);
         return ResponseEntity.ok(result);
+    }
+
+    @GetMapping("/index")
+    public String home() {
+        return "index";
     }
 }
