@@ -1,8 +1,8 @@
 package com.smallproject.SmallProject.repository;
 
-import com.smallproject.SmallProject.entity.Company;
+import com.smallproject.SmallProject.entity.CompanyEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface CompanyRepository extends JpaRepository<Company, Long>{
-    Company findByName(String companyName);
+public interface CompanyRepository extends JpaRepository<CompanyEntity, Long>{
+    CompanyEntity findByName(String companyName);
 }

@@ -11,15 +11,18 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 @Table(name="employee")
-public class Employee {
+public class EmployeeEntity {
 //    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "employee_id")
+    private Long employeeId;
 
     @Column(nullable=false, unique=true)
     private String employeeName;
+
+    private String email;
 
     @Column(nullable=false)
     private String password;
@@ -33,10 +36,13 @@ public class Employee {
     @Column(nullable=false)
     private String companyZipCode;
 
+    @Column(nullable = false)
+    private boolean enabled = false;
+
     @ManyToOne(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
     @JoinTable(
             name="employee_company",
             joinColumns={@JoinColumn(name="employee_id", referencedColumnName="id")},
             inverseJoinColumns={@JoinColumn(name="company_id", referencedColumnName="id")})
-    private List<Company> companies = new ArrayList<>();
+    private List<CompanyEntity> companies = new ArrayList<>();
 }

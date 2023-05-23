@@ -1,6 +1,5 @@
 package com.smallproject.SmallProject.dto;
 
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,7 +11,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class EmployeeDto {
-    private Long id;
+    private Long employeeId;
     @NotEmpty
     private String employeeName;
     @NotEmpty(message = "Password should not be empty")
@@ -23,4 +22,11 @@ public class EmployeeDto {
     private String companyAddress;
     @NotEmpty
     private String companyZipCode;
+
+    public EmployeeDto(Long employeeId, String employeeName, String companyName, String companyAddress) {
+        this.employeeId = employeeId;
+        this.employeeName = employeeName;
+        this.companyName = companyName;
+        this.companyAddress = companyAddress;
+    }
 }

@@ -10,7 +10,7 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 @Table(name="company")
-public class Company {
+public class CompanyEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
@@ -25,6 +25,6 @@ public class Company {
     private String companyZipCode;
 
     @OneToMany(mappedBy = "")
-    private List<Employee> employees;
+    private List<EmployeeEntity> employees;
 }
 
