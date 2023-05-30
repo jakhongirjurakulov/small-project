@@ -8,19 +8,11 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 @RestController
-@RequestMapping("/api")
-public class EmployeeResource {
-
+public class EmployeeResourceController {
     private final EmployeeServiceImpl employeeService;
 
-    public EmployeeResource(EmployeeServiceImpl employeeService) {
+    public EmployeeResourceController(EmployeeServiceImpl employeeService) {
         this.employeeService = employeeService;
-    }
-
-    @PostMapping("/employee/registration")
-    public ResponseEntity create(@RequestBody EmployeeDto employeeDto) {
-        var employee = employeeService.save(employeeDto);
-        return ResponseEntity.ok(employee);
     }
 
     @GetMapping("/employees")

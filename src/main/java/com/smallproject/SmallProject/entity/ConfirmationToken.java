@@ -16,7 +16,7 @@ import java.util.UUID;
 @Entity
 @Table(name="confirmation_token")
 public class ConfirmationToken {
-    private static final int EXPIRATION = 60 * 24;
+//    private static final int EXPIRATION = 60 * 24;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -33,7 +33,7 @@ public class ConfirmationToken {
     @JoinColumn(nullable = false, name = "employee_id")
     private EmployeeEntity employee;
 
-    private Date expiryDate;
+//    private Date expiryDate;
 //
 //    private Date calculateExpiryDate(int expiryTimeInMinutes) {
 //        Calendar cal = Calendar.getInstance();

@@ -22,7 +22,7 @@ public class EmployeeEntity {
     @Column(nullable=false, unique=true)
     private String employeeName;
 
-    private String email;
+    private String emailId;
 
     @Column(nullable=false)
     private String password;

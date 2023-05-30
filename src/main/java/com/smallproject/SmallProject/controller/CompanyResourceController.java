@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("v1/company")
-public class CompanyResource {
+public class CompanyResourceController {
 
     private CompanyService companyService;
 
