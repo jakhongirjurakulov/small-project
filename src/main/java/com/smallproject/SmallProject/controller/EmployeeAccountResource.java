@@ -1,10 +1,11 @@
 package com.smallproject.SmallProject.controller;
 
-import com.smallproject.SmallProject.entity.ConfirmationToken;
-import com.smallproject.SmallProject.entity.EmployeeEntity;
+import com.smallproject.SmallProject.domain.ConfirmationToken;
+import com.smallproject.SmallProject.domain.EmployeeEntity;
 import com.smallproject.SmallProject.repository.ConfirmationTokenRepository;
-import com.smallproject.SmallProject.repository.EmployeeRepository1;
+import com.smallproject.SmallProject.repository.EmployeeRepository;
 import com.smallproject.SmallProject.service.EmailService;
+import com.smallproject.SmallProject.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
@@ -12,9 +13,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-public class EmployeeAccountController {
+public class EmployeeAccountResource {
+
+    private EmployeeRepository employeeRepository;
     @Autowired
-    private EmployeeRepository1 employeeRepository1;
+    private EmployeeService employeeService;
     @Autowired
     private ConfirmationTokenRepository confirmationTokenRepository;
 
@@ -23,16 +26,16 @@ public class EmployeeAccountController {
 
     @PostMapping("/register")
     public ResponseEntity create(@RequestBody EmployeeEntity employeeEntity) {
-        EmployeeEntity existingEmployee = employeeRepository1.findByEmailIdIgnoreCase(employeeEntity.getEmailId());
+        EmployeeEntity existingEmployee = employeeRepository.findByEmailIdIgnoreCase(employeeEntity.getEmail());
 
         if (existingEmployee != null) {
             System.out.println("This email already exists!");
         }
-        EmployeeEntity employeeEntity1 = employeeRepository1.save(employeeEntity);
+        EmployeeEntity employeeEntity1 = employeeRepository.save(employeeEntity);
         ConfirmationToken confirmationToken = new ConfirmationToken(employeeEntity1);
         confirmationTokenRepository.save(confirmationToken);
         SimpleMailMessage mailMessage = new SimpleMailMessage();
-        mailMessage.setTo(employeeEntity1.getEmailId());
+        mailMessage.setTo(employeeEntity1.getEmail());
         mailMessage.setSubject("Complete Registration!");
         mailMessage.setFrom("EMAIL ADDRESS");
         mailMessage.setText("To confirm your account, please click here : "
@@ -48,9 +51,9 @@ public class EmployeeAccountController {
         if(token == null) {
             System.out.println("The link is invalid or broken!");
         }
-        EmployeeEntity employee = employeeRepository1.findByEmailIdIgnoreCase(token.getEmployee().getEmailId());
+        EmployeeEntity employee = employeeRepository.findByEmailIdIgnoreCase(token.getEmployee().getEmail());
         employee.setEnabled(true);
-        EmployeeEntity employee1 = employeeRepository1.save(employee);
+        EmployeeEntity employee1 = employeeRepository.save(employee);
         return ResponseEntity.ok(employee1);
     }
 }

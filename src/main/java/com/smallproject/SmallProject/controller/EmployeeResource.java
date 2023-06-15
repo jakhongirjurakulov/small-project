@@ -1,17 +1,18 @@
 package com.smallproject.SmallProject.controller;
 
 import com.smallproject.SmallProject.dto.EmployeeDto;
-import com.smallproject.SmallProject.entity.EmployeeEntity;
+import com.smallproject.SmallProject.domain.EmployeeEntity;
+import com.smallproject.SmallProject.service.EmployeeService;
 import com.smallproject.SmallProject.service.EmployeeServiceImpl;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 @RestController
-public class EmployeeResourceController {
-    private final EmployeeServiceImpl employeeService;
+public class EmployeeResource {
+    private final EmployeeService employeeService;
 
-    public EmployeeResourceController(EmployeeServiceImpl employeeService) {
+    public EmployeeResource(EmployeeServiceImpl employeeService) {
         this.employeeService = employeeService;
     }
 
@@ -30,17 +31,16 @@ public class EmployeeResourceController {
     @PutMapping("/employee/edit/{id}")
     public ResponseEntity edit(@PathVariable Long id, @RequestBody EmployeeEntity newEmployee) {
         EmployeeDto employeeDto = new EmployeeDto();
-        employeeDto.setEmployeeName(newEmployee.getEmployeeName());
-        employeeDto.setCompanyName(newEmployee.getCompanyName());
-        employeeDto.setCompanyAddress(newEmployee.getCompanyAddress());
-        employeeDto.setCompanyZipCode(newEmployee.getCompanyZipCode());
+        employeeDto.setEmployeeName(newEmployee.getName());
+//        employeeDto.setCompanyName(newEmployee.getCompanyName());
+//        employeeDto.setCompanyAddress(newEmployee.getCompanyAddress());
+//        employeeDto.setCompanyZipCode(newEmployee.getCompanyZipCode());
         return ResponseEntity.ok(employeeDto);
     }
 
     @DeleteMapping("/employee/delete/{id}")
-    public String delete(@PathVariable Long id) {
-        String deletedEmployee = employeeService.delete(id);
-        return deletedEmployee;
+    public String delete(@PathVariable Long id) throws Exception {
+        return employeeService.delete(id);
     }
 
     @GetMapping("currency-rate")
@@ -50,9 +50,4 @@ public class EmployeeResourceController {
         String result = restTemplate.getForObject(uri, String.class);
         return ResponseEntity.ok(result);
     }
-
-//    @GetMapping("/index")
-//    public String home() {
-//        return "index";
-//    }
 }

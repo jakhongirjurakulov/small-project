@@ -1,12 +1,10 @@
-package com.smallproject.SmallProject.entity;
+package com.smallproject.SmallProject.domain;
 
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.security.Timestamp;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.UUID;
 

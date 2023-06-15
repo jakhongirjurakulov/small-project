@@ -4,8 +4,8 @@ import com.smallproject.SmallProject.service.CompanyService;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("v1/company")
-public class CompanyResourceController {
+@RequestMapping("/v1/company")
+public class CompanyResource {
 
     private CompanyService companyService;
 
